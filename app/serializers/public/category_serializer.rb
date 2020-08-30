@@ -2,7 +2,7 @@
 
 class Public::CategorySerializer < ActiveModel::Serializer
   # include Expandable
-  attributes :id, :name, :created_at, :deleted_at, :link
+  attributes :id, :name, :photo_url, :created_at, :deleted_at, :link
   attribute :sub_categories, if: :condition?
 
   # has_many :sub_categories

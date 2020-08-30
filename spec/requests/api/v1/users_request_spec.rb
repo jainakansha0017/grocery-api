@@ -5,7 +5,7 @@ RSpec.describe "Api::V1::Users", type: :request do
    # initialize test data
   let!(:user) { create(:user) }
   let(:user_id) { user.id}
-  let(:headers) { valid_headers }
+  let(:headers) { valid_headers(user) }
   let(:invalid_headers) { { 'Authorization' => nil } }
 
   # Test suite for GET /api/v1/users/:id

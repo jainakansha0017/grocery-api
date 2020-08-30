@@ -12,6 +12,7 @@ class CreateProducts < ActiveRecord::Migration[5.0]
       t.string :unit
       t.string :discount_kind
       t.decimal :tax_rate, precision: 11, scale: 8
+      t.string :description, text:true
       t.timestamps
     end
   end

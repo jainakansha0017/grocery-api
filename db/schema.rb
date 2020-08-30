@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200822133251) do
+ActiveRecord::Schema.define(version: 20200829080210) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string   "namespace"
@@ -38,14 +38,66 @@ ActiveRecord::Schema.define(version: 20200822133251) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  create_table "carts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer  "offer_id"
+    t.integer  "user_id"
+    t.string   "mode_of_payment"
+    t.string   "status"
+    t.string   "addres_line_1"
+    t.string   "addres_line_2"
+    t.string   "city"
+    t.string   "postal_code"
+    t.string   "state"
+    t.string   "delivery_place"
+    t.string   "mobile_number"
+    t.datetime "unconfirmed_at"
+    t.datetime "pending_at"
+    t.datetime "approved_at"
+    t.datetime "confirmed_at"
+    t.datetime "cancelled_at"
+    t.datetime "delivered_at"
+    t.string   "delivery_person_name"
+    t.string   "delivery_person_mobile_number"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.index ["offer_id"], name: "index_carts_on_offer_id", using: :btree
+    t.index ["user_id"], name: "index_carts_on_user_id", using: :btree
+  end
+
   create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string   "name"
     t.datetime "deleted_at"
+    t.string   "photo_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "offers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string   "description"
+    t.string   "title"
+    t.decimal  "value",       precision: 11, scale: 8
+    t.decimal  "max_value",   precision: 11, scale: 8
+    t.string   "kind"
+    t.string   "code"
+    t.datetime "starts_at"
+    t.datetime "finishes_at"
+    t.boolean  "active",                               default: false
+    t.datetime "deleted_at"
+    t.datetime "created_at",                                           null: false
+    t.datetime "updated_at",                                           null: false
+  end
+
+  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.integer  "cart_id"
+    t.integer  "product_id"
+    t.integer  "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cart_id"], name: "index_orders_on_cart_id", using: :btree
+    t.index ["product_id"], name: "index_orders_on_product_id", using: :btree
+  end
+
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "sub_category_id"
     t.string   "name"
     t.integer  "quantity"
@@ -57,6 +109,7 @@ ActiveRecord::Schema.define(version: 20200822133251) do
     t.string   "unit"
     t.string   "discount_kind"
     t.decimal  "tax_rate",        precision: 11, scale: 8
+    t.string   "description"
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
     t.index ["sub_category_id"], name: "index_products_on_sub_category_id", using: :btree
@@ -94,6 +147,10 @@ ActiveRecord::Schema.define(version: 20200822133251) do
     t.datetime "updated_at",                                      null: false
   end
 
+  add_foreign_key "carts", "offers"
+  add_foreign_key "carts", "users"
+  add_foreign_key "orders", "carts"
+  add_foreign_key "orders", "products"
   add_foreign_key "products", "sub_categories"
   add_foreign_key "sub_categories", "categories"
 end

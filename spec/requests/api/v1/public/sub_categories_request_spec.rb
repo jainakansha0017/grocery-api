@@ -7,7 +7,7 @@ RSpec.describe "Api::V1::Public::SubCategories", type: :request do
   let(:category_id) { category.id }
   let(:id) { sub_categories.first.id }
   let!(:user) { create(:user) }
-  let(:headers) { valid_headers }
+  let(:headers) { valid_headers(user) }
   let(:invalid_headers) { { 'Authorization' => nil } }
 
   # Test suite for GET /api/v1/public/categories/:category_id/sub_categories

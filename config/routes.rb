@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   # scope module: :v1, constraints: ApiVersion.new('v1', true) do
   namespace :api do
     namespace :v1 do
+      resources :offers, only: [:index, :show]
+      # resources :cart, only: [:show, :update] do
+      #   resources :users
+      # end
       resources :categories do
         resources :sub_categories
       end
@@ -12,7 +16,12 @@ Rails.application.routes.draw do
         resources :products, only: [:index, :show]
       end
       resources :products, only: [:index, :show]
-      resources :users, only: [:show, :update, :destroy]
+      resources :users, only: [:show, :update, :destroy] do
+        resources :carts, only:[:create, :index]
+      end
+      resources :carts, only: [:show, :update, :destroy]
+
+
       namespace :public do
         resources :categories, only: [:index, :show] do
           resources :sub_categories, only: [:index, :show]

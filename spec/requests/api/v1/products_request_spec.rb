@@ -9,7 +9,7 @@ RSpec.describe "Api::V1::Products", type: :request do
   let(:sub_category_id) { sub_category.id }
   let(:id) { products.first.id }
   let!(:user) { create(:user) }
-  let(:headers) { valid_headers }
+  let(:headers) { valid_headers(user) }
   let(:invalid_headers) { { 'Authorization' => nil } }
 
   # Test suite for GET /api/v1/sub_categories/:sub_category_id/products

@@ -2,6 +2,7 @@ class ApiController < ActionController::API
   include Response
   include ExceptionHandler
   include Payloadable
+  include Pundit
 
   before_action :authorize_request, :parameters
   attr_reader :current_user, :total, :page_no, :page_size, :type, :retrieved_at

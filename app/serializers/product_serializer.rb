@@ -3,7 +3,7 @@
 class ProductSerializer < ActiveModel::Serializer
   # include Expandable
   attributes :id, :name, :quantity, :price, :discount, :availability, :photo_url, :unit,
-    :discount_kind, :tax_rate, :created_at, :deleted_at, :link
+    :discount_kind, :tax_rate, :description, :created_at, :deleted_at, :link
   attribute :sub_category, if: :condition?
 
   # has_many :sub_categories
