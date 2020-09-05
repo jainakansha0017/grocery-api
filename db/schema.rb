@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20200829080210) do
 
-  create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "namespace"
     t.text     "body",          limit: 65535
     t.string   "resource_type"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
   end
 
-  create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "admin_users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
     t.string   "reset_password_token"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  create_table "carts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "carts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "offer_id"
     t.integer  "user_id"
     t.string   "mode_of_payment"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.index ["user_id"], name: "index_carts_on_user_id", using: :btree
   end
 
-  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "deleted_at"
     t.string   "photo_url"
@@ -72,7 +72,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "offers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "offers", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "description"
     t.string   "title"
     t.decimal  "value",       precision: 11, scale: 8
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.datetime "updated_at",                                           null: false
   end
 
-  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "orders", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "cart_id"
     t.integer  "product_id"
     t.integer  "quantity"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.index ["product_id"], name: "index_orders_on_product_id", using: :btree
   end
 
-  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "products", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "sub_category_id"
     t.string   "name"
     t.integer  "quantity"
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.index ["sub_category_id"], name: "index_products_on_sub_category_id", using: :btree
   end
 
-  create_table "sub_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "sub_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name"
     t.datetime "deleted_at"
     t.integer  "category_id"
@@ -124,7 +124,7 @@ ActiveRecord::Schema.define(version: 20200829080210) do
     t.index ["category_id"], name: "index_sub_categories_on_category_id", using: :btree
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
