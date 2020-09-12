@@ -10,7 +10,8 @@ class PayloadSerializer < ActiveModel::Serializer
       total: total,
       page_size: page_size,
       page_no: page_no,
-      type: type    }
+      type: type
+    }
   end
 
   [:total, :page_size, :page_no, :type].map do |t|

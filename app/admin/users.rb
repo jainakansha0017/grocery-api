@@ -5,7 +5,7 @@ ActiveAdmin.register User do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :first_name, :last_name, :email, :password_digest, :address_line_1, :address_line_2, :latitude, :longitude, :city, :province, :postal_code, :country, :photo_url, :mobile_number, :date_of_birth, :new_email, :new_mobile_number, :whatsapp_mobile_number
+  permit_params :first_name, :last_name, :email, :password_digest, :address_line_1, :address_line_2, :latitude, :longitude, :city, :province, :postal_code, :country, :photo_url, :mobile_number, :date_of_birth, :new_email, :new_mobile_number, :whatsapp_mobile_number
   #
   # or
   #

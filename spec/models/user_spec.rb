@@ -9,4 +9,5 @@ RSpec.describe User, type: :model do
   it { should validate_presence_of(:first_name) }
   it { should validate_presence_of(:mobile_number) }
   it { should validate_presence_of(:password_digest) }
+  it { should validate_uniqueness_of(:mobile_number) }
 end

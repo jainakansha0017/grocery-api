@@ -6,7 +6,6 @@ module Payloadable
   end
 
   def payload(model, representer, options = {})
-    # binding.pry
     case model
     when ActiveRecord::Relation
       dataset_payload(model, representer, options)
@@ -19,20 +18,12 @@ module Payloadable
 
   def collection_payload(model, representer, options = {})
     builder_class = "#{options[:builder] || :CollectionBuilder}".constantize
-    # binding.pry
     builder = collection_of(builder_class, model, representer, options)
-    # binding.pry
-    # json PayloadRepresenter.prepare(builder.build).to_hash
     json_response(PayloadSerializer.new(builder.build).to_hash, options[:status])
   end
 
   def object_payload(model, representer, options = {})
     builder = object_of(ObjectBuilder, model, representer, options)
-    # binding.pry
-    # json PayloadRepresenter
-    #   .prepare(builder.build)
-    #   .to_hash(links: false)
-    #   .reject!{|key, value| key != 'data' && value.empty? if value.respond_to?(:empty?) }
     json_response(PayloadSerializer.new(builder.build).to_hash, options[:status])
   end
 
