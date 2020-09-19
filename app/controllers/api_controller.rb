@@ -15,7 +15,7 @@ class ApiController < ActionController::API
   end
 
   def parameters
-    request.params.delete_if { |k, v| v.empty? }
+    request.params.delete_if { |k, v| v.blank? }
     @order = request.params.delete(:order) || {}
     @exclude = request.params.delete(:exclude) || {}
     @expand = request.params.delete(:expand)

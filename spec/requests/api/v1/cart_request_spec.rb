@@ -43,9 +43,9 @@ RSpec.describe "Api::V1::Carts", type: :request do
 
     # Test suite for PUT /api/v1/users/:user_id/carts
     describe 'POST /api/v1/users/:user_id/carts' do
-
+      let(:valid_attributes) { { mode_of_payment: "cash" }.to_json }
       context 'when request attributes are valid' do
-        before { post "/api/v1/users/#{user_id}/carts" ,params: {}, headers: headers}
+        before { post "/api/v1/users/#{user_id}/carts" ,params: valid_attributes, headers: headers}
 
         it 'returns status code 201' do
           expect(response).to have_http_status(201)
@@ -54,6 +54,10 @@ RSpec.describe "Api::V1::Carts", type: :request do
         it "expect the status to be unconfirmed" do
           new_cart = Cart.last
           expect(new_cart).to have_state(:unconfirmed)
+        end
+
+        it 'returns the created order' do
+          expect(json['mode_of_payment']).to eq("cash")
         end
       end
     end

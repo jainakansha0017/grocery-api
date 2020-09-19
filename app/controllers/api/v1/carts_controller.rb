@@ -9,12 +9,9 @@ class Api::V1::CartsController < ApiController
 
   def create
     cart = @user.carts.new(cart_params)
-    if cart.valid?
-      authorize cart, :create?
-      payload(cart, CartSerializer, status: :created)
-    else
-      raise(ActiveRecord::RecordInvalid)
-    end
+    authorize cart, :create?
+    cart.save!
+    payload(cart, CartSerializer, status: :created)
   end
 
   # GET /carts/:id
@@ -30,7 +27,7 @@ class Api::V1::CartsController < ApiController
   # PUT /carts/:id
   def update
     if @cart
-      authorize @cart, :read?
+      authorize @cart, :update?
       @cart.update(cart_params)
       payload(@cart, CartSerializer, status: 200)
     else
@@ -40,6 +37,7 @@ class Api::V1::CartsController < ApiController
 
   # DELETE /carts/:id
   def destroy
+    authorize @cart, :destroy?
     @cart.destroy
     head :no_content
   end

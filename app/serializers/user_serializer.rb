@@ -12,6 +12,10 @@ class UserSerializer < ActiveModel::Serializer
       {
         rel: :self,
         href: "#{Settings.base_url}/api/v1/users/#{object.id}"
+      },
+      {
+        rel: :cart,
+        href: "#{Settings.base_url}/api/v1/users/#{object.id}/carts"
       }
     ]
   end

@@ -19,8 +19,10 @@ Rails.application.routes.draw do
       resources :users, only: [:show, :update, :destroy] do
         resources :carts, only:[:create, :index]
       end
-      resources :carts, only: [:show, :update, :destroy]
-
+      resources :carts, only: [:show, :update, :destroy] do
+        resources :orders, only: [:create, :index]
+      end
+      resources :orders, only: [:show, :update, :destroy]
 
       namespace :public do
         resources :categories, only: [:index, :show] do
