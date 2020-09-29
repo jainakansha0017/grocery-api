@@ -9,6 +9,7 @@ RSpec.describe "Api::V1::Carts", type: :request do
   let(:loser) { create(:user)}
   let(:headers) { valid_headers(user) }
   let(:invalid_headers) { valid_headers(loser) }
+  let(:cart){ create(:cart, :pending, user_id: user.id)}
 
   # Test suite for GET /api/v1/users/:user_id/carts
   context "when user is authorized" do
@@ -77,6 +78,45 @@ RSpec.describe "Api::V1::Carts", type: :request do
     end
 
     context 'when category cart does not exist' do
+      let(:id) { 0 }
+
+      it 'returns status code 404' do
+        expect(response).to have_http_status(404)
+      end
+
+      it 'returns a not found message' do
+        expect(response.body).to match(/Couldn't find Cart/)
+      end
+    end
+  end
+
+  describe 'GET /api/v1/carts/:id/confirmation' do
+
+    context 'when valid' do
+      before { post "/api/v1/carts/#{cart.id}/confirmation" , headers: headers}
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+
+      it 'returns the cart' do
+        cart.reload
+        expect(cart).to have_state(:confirmed)
+      end
+    end
+
+    context 'when status cannot change' do
+      before { post "/api/v1/carts/#{id}/confirmation" , headers: headers}
+      it 'returns status code 200' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns the error' do
+        expect(response.body).to match(/Validation failed: Status errors.cannot_transit/)
+      end
+    end
+
+    context 'when category cart does not exist' do
+      before { post "/api/v1/carts/#{id}/confirmation" , headers: headers}
       let(:id) { 0 }
 
       it 'returns status code 404' do

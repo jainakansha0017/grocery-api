@@ -1,6 +1,6 @@
 class Api::V1::CartsController < ApiController
   before_action :set_user, only: [:index, :create]
-  before_action :set_cart, only: [:show, :update, :destroy]
+  before_action :set_cart, only: [:show, :update, :destroy, :confirmation]
 
   def index
     authorize @user, :read?
@@ -40,6 +40,17 @@ class Api::V1::CartsController < ApiController
     authorize @cart, :destroy?
     @cart.destroy
     head :no_content
+  end
+
+  def confirmation
+    if @cart
+      authorize @cart, :update?
+      @cart.confirm
+      @cart.save!
+      payload(@cart, CartSerializer)
+    else
+      json_response(@cart)
+    end
   end
 
   private

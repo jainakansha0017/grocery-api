@@ -11,20 +11,16 @@ class Cart < ApplicationRecord
     state :unconfirmed, initial: true
     state :confirmed
     state :pending
-    state :approved
     state :cancelled
     state :delivered
 
-    event :confirm do
-      transitions from: :approved, to: :confirmed
-    end
 
     event :pending do
       transitions from: :unconfirmed, to: :pending
     end
 
-    event :approve do
-      transitions from: :pending, to: :approved
+    event :confirm do
+      transitions from: :pending, to: :confirmed
 
       # after do
       #   update_patient_address

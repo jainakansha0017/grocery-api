@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       end
       resources :carts, only: [:show, :update, :destroy] do
         resources :orders, only: [:create, :index]
+        post 'confirmation', :on => :member
       end
       resources :orders, only: [:show, :update, :destroy]
 
@@ -38,5 +39,6 @@ Rails.application.routes.draw do
   # end
 
   post 'auth/login', to: 'authentication#authenticate'
+  # post 'api/v1/carts/:id/confirmation', to: 'cart#confirmation'
   post 'signup', to: 'users#create'
 end
