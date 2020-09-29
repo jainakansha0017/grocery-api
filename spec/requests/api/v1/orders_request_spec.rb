@@ -17,7 +17,7 @@ RSpec.describe "Api::V1::Orders", type: :request do
       orders
     end
     describe 'GET /api/v1/carts/:cart_id/orders' do
-      before { get "/api/v1/carts/#{cart_id}/orders", headers: headers }
+      before { get "/api/v1/carts/#{cart_id}/orders?expand=products", headers: headers }
 
       context 'when order exists' do
         it 'returns status code 200' do
@@ -46,6 +46,7 @@ RSpec.describe "Api::V1::Orders", type: :request do
     describe 'POST /api/v1/carts/:cart_id/orders' do
       let(:valid_attributes) { { product_id: product.id, quantity: 1 }.to_json }
       let(:invalid_attributes) { { product_id: product.id}.to_json }
+      let(:invalid_attributes_2) { { product_id: orders.first.product.id, quantity: 1}.to_json }
       context 'when request attributes are valid' do
         before { post "/api/v1/carts/#{cart_id}/orders" ,params: valid_attributes, headers: headers}
 
@@ -67,6 +68,18 @@ RSpec.describe "Api::V1::Orders", type: :request do
 
         it 'returns a failure message' do
           expect(response.body).to match(/Validation failed: Quantity can't be blank/)
+        end
+      end
+
+      context 'when product id are repeated' do
+        before { post "/api/v1/carts/#{cart_id}/orders" ,params: invalid_attributes_2, headers: headers}
+
+        it 'returns status code 422' do
+          expect(response).to have_http_status(422)
+        end
+
+        it 'returns a failure message' do
+          expect(response.body).to match(/Validation failed: Product has already been taken/)
         end
       end
     end

@@ -6,7 +6,15 @@ class AuthenticateUser
 
   # Service entry point
   def call
-    JsonWebToken.encode(user_id: user.id) if user
+    if user
+      {
+        auth_token: JsonWebToken.encode(user_id: user.id),
+        link: {
+          rel: :self,
+          href: "#{Settings.base_url}/api/v1/users/#{user.id}"
+        }
+      }
+    end
   end
 
   private

@@ -4,12 +4,7 @@ class UsersController < ApiController
   def create
     user = User.create!(user_params)
     auth_token = AuthenticateUser.new(user.mobile_number, user.password).call
-    response = {
-      data: {
-         message: Message.account_created, auth_token: auth_token
-       }
-     }
-    json_response(response, :created)
+    json_response({data: auth_token.merge!(message: Message.account_created)}, :created)
   end
 
   private

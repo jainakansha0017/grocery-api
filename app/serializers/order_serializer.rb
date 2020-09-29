@@ -1,5 +1,15 @@
 class OrderSerializer < ActiveModel::Serializer
-  attributes :id, :quantity
+  attributes :id, :quantity, :created_at, :link
+  attribute :products, if: :product?
+
+  # has_many :sub_categories
+  def product?
+    object.expand && object.expand.split(',').include?("product")
+  end
+
+  def products
+    object.product
+  end
 
   def link
     [

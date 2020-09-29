@@ -4,7 +4,7 @@ class AuthenticationController < ApiController
   def authenticate
     auth_token =
       AuthenticateUser.new(auth_params[:mobile_number], auth_params[:password]).call
-    json_response({data: { auth_token: auth_token}})
+    json_response({data: auth_token})
   end
 
   private

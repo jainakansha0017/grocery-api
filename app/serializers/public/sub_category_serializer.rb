@@ -23,6 +23,10 @@ class Public::SubCategorySerializer < ActiveModel::Serializer
       {
         rel: :category,
         href: "#{Settings.base_url}/api/v1/public/categories/#{object.id}"
+      },
+      {
+        rel: :products,
+        href: "#{Settings.base_url}/api/v1/public/sub_categories/#{object.id}/products"
       }
     ]
   end
